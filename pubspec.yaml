@@ -34,7 +34,11 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  linalg : ^0.4.0
   health: ^4.6.0
+  starflut: ^1.0.0
+  koala: ^0.1.1
+  #add the package:ml_algo/ml_algo.dart
 dev_dependencies:
   flutter_test:
     sdk: flutter

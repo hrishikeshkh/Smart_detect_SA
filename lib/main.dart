@@ -3,12 +3,16 @@
 //the model is then used to predict the activity of the user
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
+//import a package to train an ML model on flutter
+import 'package:starflut/starflut.dart';
+import 'package:linalg/linalg.dart';
+import 'package:koala/koala.dart' hide Column;
 
 void main() {
   runApp(const MyApp());
 }
 
-Future<List<HealthDataPoint>> fetchData() async {
+Future<List> fetchData() async {
   List<HealthDataType> types = [
     //get blood oxygen data
     HealthDataType.BLOOD_OXYGEN,
@@ -25,20 +29,21 @@ Future<List<HealthDataPoint>> fetchData() async {
   // Fetch the SPO2 and BP data for the past week
   DateTime endDate = DateTime.now();
   DateTime startDate = endDate.subtract(Duration(hours: 10));
-  List<HealthDataPoint> data = await health.getHealthDataFromTypes(startDate, endDate, types);
-
+  List listA = await health.getHealthDataFromTypes(startDate, endDate, types);
+  int a = 0;
+  //append the integer a at the end of our data listA
+  listA.add(a);
   // Do something with the data
   //train function goes here
 
-  for (var point in data) {
-    print(point.type);
-    print(point.value);
-    print(point.unit);
-    print(point.dateFrom);
-    print(point.dateTo);
-  }
-
-  return data;
+  final fromNamesAndData = DataFrame.fromNamesAndData(
+    ['spo2', 'gluc', 'bps', 'bpd', 'label'], 
+    [
+      listA,
+    ]);
+  
+  
+  return listA;
 }
 
 class MyApp extends StatelessWidget {
