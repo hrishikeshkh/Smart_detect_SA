@@ -13,7 +13,7 @@ void main() {
   runApp(const MyApp());
 }
 
-Future<List> fetchData() async {
+Future<List> fetchData(int a) async {
   List<HealthDataType> types = [
     //get blood oxygen data
     HealthDataType.BLOOD_OXYGEN,
@@ -45,7 +45,7 @@ Future<List> fetchData() async {
 
   final features = DataFrame([['spo2', 'gluc', 'bps', 'bpd', 'label'], listA]);
 
-  final model = LinearRegressor.SGD(features, 'output', fitIntercept: false, initialCoefficients: initial_vec);
+  final model = LinearRegressor.SGD(features, 'label', fitIntercept: false, initialCoefficients: initial_vec);
 
   initial_coef = model.coefficients.toList();
   //write the matrix back
@@ -149,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           textStyle: const TextStyle(fontSize: 20)),
                       onPressed: () {
                         // Respond to button press
-                        fetchData();
+                        fetchData(1);
                       },
                       child: Text('Yes'),
                     )),
@@ -162,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           textStyle: const TextStyle(fontSize: 20)),
                       onPressed: () {
                         // Respond to button press
-                        fetchData();
+                        fetchData(0);
                       },
                       child: Text('No'),
                     ))
