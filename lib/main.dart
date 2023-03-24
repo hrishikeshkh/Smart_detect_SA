@@ -4,9 +4,10 @@
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 //import a package to train an ML model on flutter
-import 'package:starflut/starflut.dart';
-import 'package:linalg/linalg.dart';
-import 'package:koala/koala.dart' hide Column;
+import 'package:ml_algo/ml_algo.dart';
+import 'package:ml_dataframe/ml_dataframe.dart';
+import 'package:ml_linalg/matrix.dart';
+import 'package:ml_linalg/vector.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,18 +32,23 @@ Future<List> fetchData() async {
   DateTime startDate = endDate.subtract(Duration(hours: 10));
   List listA = await health.getHealthDataFromTypes(startDate, endDate, types);
   int a = 0;
+
+  //get this matrix
+  List<double> initial_coef = [0.0, 0.0, 0.0, 0.0];
   //append the integer a at the end of our data listA
   listA.add(a);
   // Do something with the data
   //train function goes here
+  final vec = Vector.fromList(initial_coef);
 
-  final fromNamesAndData = DataFrame.fromNamesAndData(
-    ['spo2', 'gluc', 'bps', 'bpd', 'label'], 
-    [
-      listA,
-    ]);
-  
-  
+  final initial_vec = Matrix.fromColumns([vec]);
+
+  final features = DataFrame([['spo2', 'gluc', 'bps', 'bpd', 'label'], listA]);
+
+  final model = LinearRegressor.SGD(features, 'output', fitIntercept: false, initialCoefficients: initial_vec);
+
+  initial_coef = model.coefficients.toList();
+  //write the matrix back
   return listA;
 }
 

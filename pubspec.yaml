@@ -37,7 +37,9 @@ dependencies:
   linalg : ^0.4.0
   health: ^4.6.0
   starflut: ^1.0.0
-  koala: ^0.1.1
+  ml_algo: ^16.17.7
+  ml_dataframe: ^1.6.0
+  ml_linalg: ^13.11.30
   #add the package:ml_algo/ml_algo.dart
 dev_dependencies:
   flutter_test:
